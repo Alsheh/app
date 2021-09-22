@@ -1,0 +1,19 @@
+version: '2'
+services:
+  app:    
+    image: app
+    container_name: app
+    ports:
+    - 80:80
+    environment:
+      - ELASTIC_APM_ENABLED=true      
+      - ELASTIC_APM_SERVER_URL=http://apm-server:8200      
+      - ELASTIC_APM_ENVIRONMENT=local
+      - ELASTIC_APM_SERVICE_NAME=app      
+      - ELASTIC_APM_LOG_LEVEL=debug      
+  apm-server:
+    image: docker.elastic.co/apm/apm-server:7.14.1
+    ports:
+    - 8200:8200
+    volumes:
+      - ./apm-server.yml:/usr/share/apm-server/apm-server.yml
